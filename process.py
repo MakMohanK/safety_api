@@ -7,8 +7,8 @@ import joblib
 import time
 
 # Load the trained model and label encoder
-model = joblib.load("./mar_12_models/xgb_regressor_model2.pkl")
-encoder = joblib.load("./mar_12_models/label_encoder2.pkl")
+model = joblib.load("xgb_regressor_model.pkl")
+encoder = joblib.load("label_encoder.pkl")
 
 csv_file_path = 'database2.csv'
 
@@ -78,7 +78,13 @@ def get_location_info(latitude, longitude):
             new_data["oneway"] = int(oneway)
 
             if new_data["highway_type"] != 0:
-                safety , priority = prediction_on_data(new_data=new_data)
+                if new_data["highway_type"] == "motorway":
+                    safety , priority = prediction_on_data(new_data=new_data)
+                    priority = 3
+                    safety = 0
+                else:
+                    safety , priority = prediction_on_data(new_data=new_data)
+                
                 entry.append([safety, priority])
                 append_csv(entry=entry)
                 in_name = "input_"+str(count)
@@ -116,12 +122,12 @@ def prediction_on_data(new_data):
     safety = int(prediction[0][0])
     priority = int(prediction[0][1])
     # Display results
-    print(f"Predicted Safety: {int(prediction[0][0])}")
-    print(f"Predicted Priority Level: {int(prediction[0][1])}")
+    # print(f"Predicted Safety: {int(prediction[0][0])}")
+    # print(f"Predicted Priority Level: {int(prediction[0][1])}")
 
     return safety, priority
 
 
-# get_location_info(18.608260, 73.821062)
+# print(get_location_info(22.991918, 73.369484))
 
 
