@@ -7,8 +7,8 @@ import joblib
 import time
 
 # Load the trained model and label encoder
-model = joblib.load("./xgb_regressor_model.pkl")
-encoder = joblib.load("./label_encoder.pkl")
+model = joblib.load("./mar_12_models/xgb_regressor_model2.pkl")
+encoder = joblib.load("./mar_12_models/label_encoder2.pkl")
 
 csv_file_path = 'database2.csv'
 
